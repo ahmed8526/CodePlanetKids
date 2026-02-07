@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="icon" href="logo.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بايثون الاحترافية | Code Planet Kids</title>
+    
+    <!-- خط Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #e67e22; 
+            --primary-light: #f39c12;
+            --secondary-color: #2c3e50;
+            --header-btn-color: #FF6B6B;
+            --header-link-color: #555;
+            
+            --badge-orange: #e67e22;  
+            --badge-dark: #2c3e50;    
+            --box-bg-dark: #17212b;   
+            --timeline-line: #e0e0e0;
+            
+            /* ألوان الفوتر والواتساب */
+            --footer-bg: #1a1a1a;        
+            --footer-border: #4ecdc4;    /* الشريط التركواز العلوي */
+            --whatsapp-green: #25d366;   
+            --whatsapp-glow: rgba(37, 211, 102, 0.5); 
+        }
+
+        body { margin: 0; font-family: 'Cairo', sans-serif; padding-top: 70px; background-color: #f9f9f9; }
+        a { text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- Header --- */
+        header { background: #fff; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: 70px; display: flex; align-items: center; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo { font-size: 1.3rem; font-weight: 800; color: #2c3e50; display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 40px; }
+        nav#navbar { display: flex; gap: 20px; align-items: center; }
+        nav#navbar a { color: var(--header-link-color); font-weight: 700; font-size: 1rem; transition: 0.3s; padding: 5px 0; }
+        nav#navbar a:hover { color: var(--header-btn-color); }
+        nav#navbar .cta-btn { background: var(--header-btn-color) !important; color: white !important; padding: 8px 25px; border-radius: 50px; font-size: 0.95rem; font-weight: 700; box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3); }
+        nav#navbar .cta-btn:hover { background: #ff5252 !important; transform: translateY(-2px); }
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: #2c3e50; }
+
+        /* --- Hero --- */
+        .course-hero-banner { 
+            position: relative; min-height: 550px; 
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.85)), url('https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+            display: flex; align-items: center; justify-content: center; 
+            color: white; text-align: center; padding: 100px 20px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%); margin-top: -70px;
+        }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 15px; font-weight: 800; text-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .hero-text p { font-size: 1.4rem; opacity: 0.95; margin-bottom: 30px; font-weight: 400; }
+        .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn-glow { background: linear-gradient(45deg, var(--primary-color), var(--primary-light)); color: white; padding: 15px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: 700; box-shadow: 0 0 20px rgba(230, 126, 34, 0.6); transition: 0.3s; border: none; animation: pulse-btn 2s infinite; display: inline-block; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(230, 126, 34, 0.8); }
+        .btn-outline-light { border: 2px solid rgba(255,255,255,0.8); color: white; padding: 12px 30px; border-radius: 50px; font-weight: 700; transition: 0.3s; background: rgba(255,255,255,0.1); display: inline-block; }
+        .btn-outline-light:hover { background: white; color: #2c3e50; }
+        @keyframes pulse-btn { 0% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(230, 126, 34, 0); } 100% { box-shadow: 0 0 0 0 rgba(230, 126, 34, 0); } }
+
+        /* --- Trust Bar --- */
+        .trust-bar { background: white; padding: 30px 0; margin-top: -60px; position: relative; z-index: 5; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 1px solid #eee; }
+        .trust-grid { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 10px; color: #555; font-weight: 700; }
+        .trust-item i { color: #27ae60; font-size: 1.2rem; }
+
+        /* --- Layout --- */
+        .course-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; max-width: 1200px; margin: 60px auto; padding: 0 20px; align-items: start; }
+        .content-card { background: white; padding: 35px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); margin-bottom: 30px; border: 1px solid #f0f0f0; }
+
+        /* --- Syllabus --- */
+        .section-head { font-size: 1.7rem; color: #2c3e50; margin-bottom: 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 20px; font-weight: 800; }
+        .section-head i { color: var(--badge-orange); }
+        .syllabus-container { position: relative; padding-right: 20px; margin-top: 30px; }
+        .syllabus-container::before { content: ''; position: absolute; top: 10px; right: 0; width: 2px; height: 100%; background: var(--timeline-line); z-index: 1; }
+        .syllabus-box { display: flex; align-items: flex-start; margin-bottom: 35px; position: relative; gap: 20px; }
+        .week-badge { background: var(--badge-orange); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; min-width: 100px; text-align: center; position: relative; z-index: 2; }
+        .week-badge::after { content: ''; position: absolute; top: 50%; right: -6px; transform: translateY(-50%); border-width: 6px 0 6px 6px; border-style: solid; border-color: transparent transparent transparent var(--badge-orange); }
+        .syllabus-box.dark-badge .week-badge { background: var(--badge-dark); }
+        .syllabus-box.dark-badge .week-badge::after { border-color: transparent transparent transparent var(--badge-dark); }
+        .syllabus-box::before { content: ''; position: absolute; right: -25px; top: 15px; width: 12px; height: 12px; background: white; border: 2px solid var(--badge-orange); border-radius: 50%; z-index: 2; }
+        .syllabus-box.dark-badge::before { border-color: var(--badge-dark); }
+        .week-content h4 { margin: 0 0 5px 0; color: #2c3e50; font-weight: 800; font-size: 1.1rem; }
+        .week-content p { margin: 0; color: #7f8c8d; font-size: 0.95rem; line-height: 1.6; font-weight: 600; }
+
+        /* --- Locked Level --- */
+        a.locked-level { display: flex; align-items: center; justify-content: space-between; background: var(--box-bg-dark); border: 2px solid var(--badge-orange); border-radius: 15px; padding: 25px; margin-top: 40px; text-decoration: none; position: relative; z-index: 5; transition: 0.3s; flex-direction: row-reverse; }
+        a.locked-level:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(230, 126, 34, 0.4); }
+        a.locked-level .lock-icon { font-size: 2rem; color: var(--badge-orange); background: rgba(230, 126, 34, 0.1); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+
+        /* --- Footer (Black with Teal Top) --- */
+        .site-footer {
+            background-color: var(--footer-bg);
+            border-top: 5px solid var(--footer-border);
+            padding: 30px 0;
+            margin-top: 60px;
+            color: #bdc3c7;
+        }
+        .site-footer p { margin: 0; text-align: center; font-weight: 600; font-size: 0.9rem; }
+
+        /* --- WhatsApp Button (Right Bottom) --- */
+        .whatsapp-float {
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; /* على اليمين كما طلبت */
+            background: var(--whatsapp-green); 
+            color: white; 
+            width: 60px; height: 60px; 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 32px; 
+            box-shadow: 0 4px 15px var(--whatsapp-glow); 
+            z-index: 1000; transition: 0.3s;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 20px var(--whatsapp-glow); }
+
+        /* --- Game & Sidebar --- */
+        .game-showcase { background: #f8f9fa; padding: 60px 20px; text-align: center; border-radius: 20px; margin: 40px 0; border: 2px dashed #e0e0e0; }
+        .game-frame { border: 8px solid #2c3e50; border-radius: 15px; overflow: hidden; max-width: 600px; margin: 20px auto; background: black; }
+        .sidebar-col { position: static; height: auto; }
+        .price-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); text-align: center; border-top: 5px solid var(--primary-color); }
+        .price-display { margin: 20px 0; }
+        .old { text-decoration: line-through; color: #999; font-size: 1.1rem; }
+        .new { font-size: 2.8rem; color: var(--primary-color); font-weight: 800; line-height: 1; display: block; margin-top: 5px; }
+        .save-tag { background: #e3f2fd; color: #2980b9; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; display: inline-block; margin-top: 10px; }
+        .guarantee-box { margin-top: 20px; font-size: 0.85rem; color: #7f8c8d; display: flex; align-items: center; justify-content: center; gap: 5px; background: #fafafa; padding: 10px; border-radius: 10px; font-weight: 600; }
+        
+                /* --- تحسينات الموبايل (Mobile Optimization) --- */
+                @media (max-width: 768px) { 
+            .menu-toggle { display: block; }
+            nav#navbar { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: white; padding: 20px; border-top: 1px solid #eee; box-shadow: 0 10px 10px rgba(0,0,0,0.1); }
+            nav#navbar.active { display: flex; }
+            
+            .course-layout { grid-template-columns: 1fr; display: flex; flex-direction: column; } 
+            .sidebar-col { width: 100%; margin-top: 40px; order: 2; }
+            .content-col { order: 1; }
+            
+            /* --- التعديل الجذري لشكل المنهج في الموبايل --- */
+            .syllabus-container { 
+                padding-right: 25px; /* مساحة للخط الرمادي */
+            }
+            
+            .syllabus-box { 
+                flex-direction: column; /* الشارة فوق والكلام تحت */
+                gap: 10px; 
+                margin-bottom: 40px;
+                position: relative;
+            }
+
+            /* تظبيط الشارة في الموبايل */
+            .week-badge { 
+                align-self: flex-start; /* تيجي على اليمين */
+                font-size: 0.85rem; 
+                padding: 5px 15px; 
+                margin-bottom: 5px;
+            }
+            
+            /* إلغاء المثلث الصغير في الموبايل عشان الشكل يبقى أنضف */
+            .week-badge::after { display: none; }
+            
+            /* النقطة البيضاء نرفعها فوق شوية عشان تبقى جنب الشارة */
+            .syllabus-box::before { top: 10px; right: -31px; }
+
+            /* تظبيط النصوص */
+            .week-content h4 { 
+                font-size: 1.1rem; 
+                line-height: 1.4; /* مسافة بين السطور */
+            }
+            .week-content p { 
+                font-size: 0.95rem; 
+                text-align: justify; /* يخلي الكلام متساوي من الجنبين */
+                margin-left: 10px;
+            }
+            
+            /* إصلاح تداخل العربي والإنجليزي */
+            .week-content h4 span {
+                display: block; /* يخلي الإنجليزي ينزل سطر لوحده لو طويل */
+                font-size: 0.9em;
+                color: #e67e22;
+                margin-top: 3px;
+            }
+        }
+
+        canvas#game-board { width: 100%; height: auto; display: block; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-content">
+        <a href="index.html" class="logo"><img src="logo.png" alt="Logo"> Code Planet Kids</a>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <nav id="navbar">
+            <a href="index.html">الرئيسية</a>
+            <a href="courses.html">الدورات</a>
+            <a href="offers.html">العروض</a>
+            <a href="jobs.html" style="color: #f1c40f;">انضم لفريقنا</a>
+            <a href="register.html" class="cta-btn">سجل الآن</a>
+        </nav>
+    </div>
+</header>
+
+<div class="course-hero-banner">
+    <div class="hero-text">
+        <span style="background: rgba(255,255,255,0.2); padding: 5px 20px; border-radius: 50px; font-size: 0.9rem; margin-bottom: 15px; display: inline-block; border: 1px solid rgba(255,255,255,0.4); font-weight: 600;">
+            🐍 لغة المستقبل والذكاء الاصطناعي (11+ سنة)
+        </span>
+        <h1>تعلم لغة العباقرة.. بايثون 🚀</h1>
+        <p>بداية حقيقية في عالم البرمجة.. من كتابة الكود لبناء البرامج</p>
+        <div class="hero-buttons">
+            <a href="register.html?plan=Python_Basics" class="btn-glow">احجز مقعدك الآن 🚀</a>
+            <a href="#demo-game" class="btn-outline-light"><i class="fas fa-gamepad"></i> العب Snake</a>
+        </div>
+    </div>
+</div>
+
+<div class="trust-bar">
+    <div class="container trust-grid">
+        <div class="trust-item"><i class="fas fa-certificate"></i> شهادة معتمدة</div>
+        <div class="trust-item"><i class="fas fa-video"></i> حصص مباشرة (Zoom)</div>
+        <div class="trust-item"><i class="fas fa-users"></i> مجموعات صغيرة</div>
+        <div class="trust-item"><i class="fas fa-undo"></i> ضمان استرداد الأموال</div>
+    </div>
+</div>
+
+<main class="course-layout">
+    <div class="content-col">
+        <!-- Game Section -->
+        <div id="demo-game" class="game-showcase">
+            <h3 style="color: #2c3e50; font-weight: 800; margin-bottom: 10px;">مش مصدق؟ العب بنفسك! 👇</h3>
+            <p style="color: #666; margin-bottom: 20px; font-weight: 600;">دي لعبة Snake معمولة ببايثون. ابنك هيتعلم يكتب الكود بتاعها!</p>
+            <div class="score-board" style="font-weight: 800;">Score: <span id="score">0</span></div>
+            <div class="game-frame" style="background: black; padding: 10px;">
+                <canvas id="game-board" width="400" height="400"></canvas>
+            </div>
+            <button onclick="startGame()" style="margin-top: 20px; padding: 10px 30px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1.2rem; font-family: 'Cairo', sans-serif; font-weight: 700;">ابدأ اللعب ▶️</button>
+            <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 10px;">(استخدم الأسهم للتحكم ⬅️⬆️➡️⬇️)</p>
+        </div>
+
+                <!-- المنهج (النسخة الاحترافية عالية التأثير) -->
+                <div class="content-card">
+                    <div class="section-head">
+                        <span>رحلة البطل (المنهج)</span>
+                        <i class="fas fa-layer-group fa-lg"></i>
+                    </div>
+                    
+                    <div class="syllabus-container">
+                        <!-- المرحلة 1 -->
+                        <div class="syllabus-box">
+                            <div class="week-badge">حصص 1-5</div>
+                            <div class="week-content">
+                                <h4>تأسيس العقل البرمجي (Logic Building) 💻</h4>
+                                <p>الانتقال من "مستخدم" للتكنولوجيا إلى "آمر" لها. هنتعلم كيف يفكر الكمبيوتر، ونبني أولى الخوارزميات التي تحول الأوامر النصية إلى واقع ملموس.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- المرحلة 2 -->
+                        <div class="syllabus-box">
+                            <div class="week-badge">حصص 6-10</div>
+                            <div class="week-content">
+                                <h4>هندسة الحلول الذكية (Problem Solving) ⚙️</h4>
+                                <p>تنمية مهارة حل المشكلات المعقدة من خلال بناء أدوات برمجية تقوم بالعمليات الحسابية ومعالجة النصوص بدقة وسرعة فائقة.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- المرحلة 3 -->
+                        <div class="syllabus-box">
+                            <div class="week-badge">حصص 11-15</div>
+                            <div class="week-content">
+                                <h4>احتراف هيكلة البيانات (Data Structures) 📊</h4>
+                                <p>فهم العصب الرئيسي لشركات التكنولوجيا الكبرى (مثل Google): كيف يتم تنظيم وإدارة ملايين البيانات بكفاءة باستخدام القوائم (Lists) والقواميس.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- المرحلة 4 -->
+                        <div class="syllabus-box dark-badge">
+                            <div class="week-badge">حصص 16-20</div>
+                            <div class="week-content">
+                                <h4>منطق الذكاء الاصطناعي (AI Logic) 🧠</h4>
+                                <p>المرحلة الأقوى: تمكين البرنامج من "اتخاذ القرارات" (Decision Making) وتنفيذ المهام المتكررة ذاتياً، وهي النواة الأساسية لأي نظام ذكي.</p>
+                            </div>
+                        </div>
+        
+                        <!-- الصندوق المقفول -->
+                        <a class='locked-level' href='https://codeplanetkids4.netlify.app/course-python-oop'> 
+                            <div class="lock-icon"><i class="fas fa-lock"></i></div> 
+                            <div> 
+                                <h4 style="color: white; margin-bottom: 5px;">القادم: البرمجة الكائنية (OOP)</h4> 
+                                <p style="margin: 0; font-size: 0.9rem; color: #e67e22; font-weight: bold;"><i class="fas fa-rocket"></i> المستوى المتقدم لبناء الأنظمة الكبيرة!</p> 
+                            </div> 
+                        </a> 
+        
+                    </div>
+                </div>
+        
+    </div>
+
+    <div class="sidebar-col">
+        <div class="price-card">
+            <h3 style="color: #2c3e50; margin-bottom: 5px; font-weight: 800;">كورس بايثون الشامل</h3>
+            <p style="color: #999; font-size: 0.9rem; font-weight: 600;">شاملة الكورس والشهادة والمتابعة</p>
+            <div class="price-display">
+                <span class="old">1250 ج.م</span>
+                <span class="new">1000 ج.م</span>
+                <span class="save-tag">خصم لفترة محدودة 🔥</span>
+            </div>
+            <ul style="text-align: right; list-style: none; color: #555; margin-bottom: 30px;">
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #27ae60; margin-left: 10px;"></i> 20 حصة تفاعلية</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #27ae60; margin-left: 10px;"></i> تسجيلات للحصص</li>
+                <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #27ae60; margin-left: 10px;"></i> مشاريع عملية</li>
+            </ul>
+            <a href="register.html?plan=Python_Basics" class="btn-glow" style="width: 100%; display: block; box-sizing: border-box;">اشترك الآن</a>
+            <div class="guarantee-box">
+                <i class="fas fa-shield-alt"></i> ضمان استرداد الأموال 100%
+            </div>
+        </div>
+    </div>
+</main>
+
+<a href="https://wa.me/201018953457" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+<footer class="site-footer">
+    <div class="container"><p>Code Planet Kids 2026 ©</p></div>
+</footer>
+
+<script>
+    function toggleMenu() { document.getElementById('navbar').classList.toggle('active'); }
+    window.addEventListener("scroll", function() {
+        var header = document.querySelector("header");
+        if (header) {
+            if (window.scrollY > 50) header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.1)";
+            else header.style.boxShadow = "none";
+        }
+    });
+
+    const canvas = document.getElementById("game-board");
+    const ctx = canvas.getContext("2d");
+    const scoreEl = document.getElementById("score");
+    let box = 20;
+    let snake = [{x: 200, y: 200}];
+    let food = {x: 0, y: 0};
+    let dx = box; let dy = 0;
+    let score = 0;
+    let gameLoop;
+
+    function startGame() {
+        if (gameLoop) clearInterval(gameLoop);
+        snake = [{x: 200, y: 200}];
+        dx = box; dy = 0;
+        score = 0;
+        scoreEl.innerText = score;
+        createFood();
+        gameLoop = setInterval(update, 150);
+        window.addEventListener("keydown", function(e) {
+            if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) e.preventDefault();
+        }, false);
+    }
+
+    function createFood() {
+        food.x = Math.floor(Math.random() * (canvas.width/box)) * box;
+        food.y = Math.floor(Math.random() * (canvas.height/box)) * box;
+    }
+
+    function update() {
+        const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+        if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+            alert("Game Over! Score: " + score);
+            clearInterval(gameLoop);
+            return;
+        }
+        snake.unshift(head);
+        if (Math.abs(head.x - food.x) < 2 && Math.abs(head.y - food.y) < 2) { 
+            score += 10; scoreEl.innerText = score; createFood();
+        } else {
+            if (head.x === food.x && head.y === food.y) { score += 10; scoreEl.innerText = score; createFood(); } 
+            else { snake.pop(); }
+        }
+        draw();
+    }
+
+    function draw() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#e74c3c";
+        ctx.fillRect(food.x, food.y, box-2, box-2);
+        ctx.fillStyle = "#2ecc71";
+        snake.forEach(part => ctx.fillRect(part.x, part.y, box-2, box-2));
+    }
+
+    document.addEventListener("keydown", changeDirection);
+    function changeDirection(event) {
+        const LEFT = 37; const RIGHT = 39; const UP = 38; const DOWN = 40;
+        if (event.keyCode === LEFT && dx !== box) { dx = -box; dy = 0; }
+        if (event.keyCode === UP && dy !== box) { dx = 0; dy = -box; }
+        if (event.keyCode === RIGHT && dx !== -box) { dx = box; dy = 0; }
+        if (event.keyCode === DOWN && dy !== -box) { dx = 0; dy = box; }
+    }
+</script>
+
+</body>
+</html>
